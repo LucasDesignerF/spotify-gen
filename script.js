@@ -17,24 +17,8 @@ function pararCronometro(intervalId, elemento) {
     elemento.textContent = "Concluído!";
 }
 
-// Função para gerar um código aleatório
-function gerarCodigoAleatorio() {
-    const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let codigo = "";
-    for (let i = 0; i < 16; i++) {
-        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-    }
-    return codigo;
-}
-
-// Função para gerar um link aleatório
-function gerarLink() {
-    const codigo = gerarCodigoAleatorio();
-    return `https://www.spotify.com/br-pt/ppt/microsoft/?code=${codigo}`;
-}
-
 // Função para iniciar a geração de contas
-function iniciarGeracaoContas() {
+async function iniciarGeracaoContas() {
     const spinner = document.getElementById("spinnerGerador");
     const progressBar = document.getElementById("progressBarGerador");
     const cronometroElemento = document.getElementById("cronometroGerador");
@@ -47,17 +31,32 @@ function iniciarGeracaoContas() {
     // Iniciar cronômetro
     cronometroGeradorInterval = iniciarCronometro(cronometroElemento);
 
-    const link = gerarLink();
+    try {
+        const response = await fetch('https://gen-spotify.ofc-rede.workers.dev/gerar-conta', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    setTimeout(() => {
-        document.getElementById("contasGeradas").textContent = link;
+        if (!response.ok) {
+            throw new Error('Erro ao gerar conta');
+        }
+
+        const data = await response.json();
+        document.getElementById("contasGeradas").textContent = data.link;
         spinner.style.display = "none";
         pararCronometro(cronometroGeradorInterval, cronometroElemento);
         progressBar.style.width = "100%";
-    }, 1000); // Simula um pequeno delay para visualização do spinner e progresso
+    } catch (error) {
+        console.error(error);
+        alert('Erro ao gerar conta.');
+        spinner.style.display = "none";
+        pararCronometro(cronometroGeradorInterval, cronometroElemento);
+    }
 }
 
-// Função para verificar contas (simulação)
+// Função para iniciar a verificação de contas
 async function iniciarVerificacaoContas() {
     const spinner = document.getElementById("spinnerVerificador");
     const progressBar = document.getElementById("progressBarVerificador");
@@ -71,37 +70,47 @@ async function iniciarVerificacaoContas() {
     // Iniciar cronômetro
     cronometroVerificadorInterval = iniciarCronometro(cronometroElemento);
 
-    const contas = document.getElementById("contasGeradas").textContent.split("\n");
-    const resultados = [];
-    let progressoPorConta = 100 / contas.length;
-
-    for (const [index, conta] of contas.entries()) {
-        if (!conta) continue;
-        try {
-            const inicio = Date.now();
-            const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1", {
-                headers: {
-                    "Authorization": conta,
-                },
-            });
-            const tempoDecorrido = ((Date.now() - inicio) / 1000).toFixed(2);
-            if (resposta.ok) {
-                resultados.push(`✅ Conta válida (${tempoDecorrido}s): ${conta}`);
-            } else {
-                resultados.push(`❌ Conta inválida (${tempoDecorrido}s): ${conta}`);
-            }
-        } catch (erro) {
-            resultados.push(`⚠️ Erro ao verificar conta: ${conta}`);
-        }
-        // Atualizar barra de progresso
-        progressBar.style.width = `${(index + 1) * progressoPorConta}%`;
+    const contas = document.getElementById("contasGeradas").textContent.trim();
+    if (!contas) {
+        alert('Nenhuma conta para verificar!');
+        spinner.style.display = "none";
+        pararCronometro(cronometroVerificadorInterval, cronometroElemento);
+        return;
     }
 
-    setTimeout(() => {
+    try {
+        const response = await fetch('https://gen-spotify.ofc-rede.workers.dev/verificar-conta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ conta: contas })
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao verificar conta');
+        }
+
+        const data = await response.json();
+        const resultados = [];
+        if (data.status === 'valido') {
+            resultados.push(`✅ Conta válida (${data.tempo}s): ${contas}`);
+        } else if (data.status === 'invalido') {
+            resultados.push(`❌ Conta inválida (${data.tempo}s): ${contas}`);
+        } else if (data.status === 'erro') {
+            resultados.push(`⚠️ Erro ao verificar conta: ${contas}`);
+        }
+
         document.getElementById("resultadoVerificacao").textContent = resultados.join("\n");
         spinner.style.display = "none";
         pararCronometro(cronometroVerificadorInterval, cronometroElemento);
-    }, 1000); // Simula um pequeno delay para visualização do spinner e progresso
+        progressBar.style.width = "100%";
+    } catch (error) {
+        console.error(error);
+        alert('Erro ao verificar conta.');
+        spinner.style.display = "none";
+        pararCronometro(cronometroVerificadorInterval, cronometroElemento);
+    }
 }
 
 // Função para exportar contas
