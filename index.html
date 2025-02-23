@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Projects - Spotify Accounts 2025</title>
     <!-- Metadados para Compartilhamento -->
-    <meta property="og:title" content="🎉 Code Projects - Spotify Accounts 2025 🎉">
+    <meta property="og:title" content="Code Projects - Spotify Accounts 2025">
     <meta property="og:description" content="
-🚀 Bem-vindo ao Code Projects - Spotify Accounts 2025! 🚀
+Bem-vindo ao Code Projects - Spotify Accounts 2025!
 
 Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante. Projetado para ser rápido e fácil de usar, este projeto fornece contas personalizadas e verifica sua validade em tempo real.
 
-✨ Principais Funcionalidades:
+Principais Funcionalidades:
 - Geração rápida de contas de Spotify.
 - Verificação instantânea de contas.
 - Interface elegante e responsiva inspirada no Spotify.
 - Totalmente otimizado para desktops e dispositivos móveis.
 
-📚 Este projeto foi desenvolvido por Code Projects e modificado por Lucas Dev para fins educacionais. Explore suas funcionalidades e descubra como ele pode ser útil para seus projetos!
+Este projeto foi desenvolvido por Code Projects e modificado por Lucas Dev para fins educacionais. Explore suas funcionalidades e descubra como ele pode ser útil para seus projetos!
 
-🔗 Acesse agora: https://spotify-gen.pages.dev/
+Acesse agora: https://spotify-gen.pages.dev/
 ">
     <meta property="og:image" content="https://assets.turbologo.com/blog/en/2021/07/20052636/spotify-brand-1-1-958x575.png">
     <meta property="og:url" content="https://spotify-gen.pages.dev/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="🎉 Code Projects - Spotify Accounts 2025 🎉">
+    <meta name="twitter:title" content="Code Projects - Spotify Accounts 2025">
     <meta name="twitter:description" content="Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante. Verifique sua validade e explore funcionalidades modernas em um design inspirado no Spotify.">
     <meta name="twitter:image" content="https://assets.turbologo.com/blog/en/2021/07/20052636/spotify-brand-1-1-958x575.png">
     <!-- Favicon -->
@@ -42,7 +42,7 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
         <div class="logo">
             <i class="fab fa-spotify"></i>
             <div>
-                <h1>Code Projects - Spotify Accounts 2025</h1>
+                <h1>Bem-vindo ao Code Projects - Spotify Accounts 2025</h1>
                 <p>Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante!</p>
             </div>
         </div>
@@ -64,6 +64,8 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
             <!-- Gerador de Contas -->
             <div id="gerador" class="secao active">
                 <h2><i class="fas fa-cogs"></i> Gerador de Contas</h2>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" min="1" max="1" value="1" readonly>
                 <button class="generate-btn" onclick="iniciarGeracaoContas()">
                     <i class="fas fa-magic"></i> Gerar
                 </button>
@@ -108,14 +110,14 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
 
             <div class="card" style="margin-top: 20px;">
                 <h3><i class="fas fa-lightbulb"></i> Dica Rápida</h3>
-                <p>Cada visitante pode obter apenas uma conta gratuita.</p>
+                <p>Cada visitante pode obter apenas uma conta gratuita a cada 24 horas.</p>
             </div>
         </div>
     </div>
 
     <!-- Footer Transparente -->
     <footer class="footer">
-        <p>Desenvolvido com ❤️ por <a href="https://github.com/seuusuario" target="_blank">Lucas Dev</a></p>
+        <p>Desenvolvido com <i class="fas fa-heart"></i> por <a href="https://github.com/seuusuario" target="_blank">Lucas Dev</a></p>
     </footer>
 
     <!-- Scripts Locais -->
@@ -166,7 +168,11 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
                 }
 
                 const data = await response.json();
-                document.getElementById("contasGeradas").textContent = data.link;
+                if (data.status && data.status === 'erro') {
+                    document.getElementById("contasGeradas").textContent = data.mensagem;
+                } else {
+                    document.getElementById("contasGeradas").textContent = data.link;
+                }
                 spinner.style.display = "none";
                 pararCronometro(cronometroGeradorInterval, cronometroElemento);
                 progressBar.style.width = "100%";
@@ -216,11 +222,11 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
                 const data = await response.json();
                 const resultados = [];
                 if (data.status === 'valido') {
-                    resultados.push(`✅ Conta válida (${data.tempo}s): ${contas}`);
+                    resultados.push(`Conta válida (${data.tempo}s): ${contas}`);
                 } else if (data.status === 'invalido') {
-                    resultados.push(`❌ Conta inválida (${data.tempo}s): ${contas}`);
+                    resultados.push(`Conta inválida (${data.tempo}s): ${contas}`);
                 } else if (data.status === 'erro') {
-                    resultados.push(`⚠️ Erro ao verificar conta: ${contas}`);
+                    resultados.push(`Erro ao verificar conta: ${contas}`);
                 }
 
                 document.getElementById("resultadoVerificacao").textContent = resultados.join("\n");
