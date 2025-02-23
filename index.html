@@ -19,10 +19,10 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
 
 📚 Este projeto foi desenvolvido por Code Projects e modificado por Lucas Dev para fins educacionais. Explore suas funcionalidades e descubra como ele pode ser útil para seus projetos!
 
-🔗 Acesse agora: https://spotify-gen.pages.dev/
+🔗 Acesse agora: https://spotify-accounts.pages.dev/
 ">
     <meta property="og:image" content="https://assets.turbologo.com/blog/en/2021/07/20052636/spotify-brand-1-1-958x575.png">
-    <meta property="og:url" content="https://spotify-gen.pages.dev/">
+    <meta property="og:url" content="https://spotify-accounts.pages.dev/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="🎉 Code Projects - Spotify Accounts 2025 🎉">
     <meta name="twitter:description" content="Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante. Verifique sua validade e explore funcionalidades modernas em um design inspirado no Spotify.">
@@ -57,18 +57,6 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
                 <button onclick="mostrarVerificador()"><i class="fas fa-check"></i> Verificar Conta</button>
                 <button onclick="mostrarCreditos()"><i class="fas fa-info-circle"></i> Créditos</button>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <select id="prefixoSelecionado">
-                    <option value="SP">Prefixo SP</option>
-                    <option value="SU">Prefixo SU</option>
-                    <option value="SV">Prefixo SV</option>
-                    <option value="SW">Prefixo SW</option>
-                    <option value="SX">Prefixo SX</option>
-                </select>
-                <button onclick="toggleTheme()" title="Alternar Modo Claro/Escuro">
-                    <i id="theme-icon" class="fas fa-sun"></i>
-                </button>
-            </div>
         </div>
 
         <!-- Main Content -->
@@ -76,8 +64,6 @@ Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante
             <!-- Gerador de Contas -->
             <div id="gerador" class="secao active">
                 <h2><i class="fas fa-cogs"></i> Gerador de Contas</h2>
-                <label for="quantidade">Quantidade:</label>
-                <input type="number" id="quantidade" min="1" max="1" value="1" readonly>
                 <button class="generate-btn" onclick="iniciarGeracaoContas()">
                     <i class="fas fa-magic"></i> Gerar
                 </button>
