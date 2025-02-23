@@ -26,7 +26,8 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
     margin-top: 100px; /* Espaço para a navbar */
     margin-bottom: 50px; /* Espaço para o footer */
-    height: calc(100vh - 150px); /* Ajuste para evitar sobreposição com navbar e footer */
+    height: auto; /* Altura automática */
+    max-height: calc(100vh - 150px); /* Máxima altura para evitar sobreposição */
 }
 
 /* Navbar */
@@ -75,7 +76,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start; /* Ajuste para alinhar no início */
     border-right: 1px solid #282828;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -112,7 +113,8 @@ body {
     flex-direction: column;
     overflow-y: auto;
     transition: background-color 0.3s ease, color 0.3s ease;
-    height: 100%; /* Ajuste para ocupar todo o espaço disponível */
+    height: auto; /* Altura automática */
+    max-height: calc(100vh - 150px); /* Máxima altura para evitar sobreposição */
 }
 
 h2 {
@@ -312,6 +314,7 @@ pre {
         grid-template-columns: 1fr;
         margin-top: 150px; /* Ajuste para telas menores */
         margin-bottom: 50px; /* Espaço para o footer */
+        max-height: calc(100vh - 200px); /* Máxima altura para evitar sobreposição */
     }
 
     .sidebar {
@@ -328,7 +331,8 @@ pre {
     }
 
     .main {
-        height: calc(100vh - 200px); /* Ajuste para evitar sobreposição com navbar e footer */
+        height: auto; /* Altura automática */
+        max-height: calc(100vh - 200px); /* Máxima altura para evitar sobreposição */
     }
 }
 
