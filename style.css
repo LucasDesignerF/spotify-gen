@@ -1,0 +1,338 @@
+/* Estilos Gerais */
+body {
+    font-family: 'Spotify-Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    background-color: #181818;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: 250px auto;
+    overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 100px; /* Espaço para a navbar */
+    margin-bottom: 50px; /* Espaço para o footer */
+}
+
+/* Navbar */
+.navbar {
+    background-color: #121212;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #282828;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    color: #1db954;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .logo i {
+    font-size: 2rem;
+}
+
+.navbar h1 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navbar p {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+    margin: 0;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #181818;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid #282828;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar button {
+    background-color: #181818;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.sidebar button:hover {
+    background-color: #282828;
+    transform: scale(1.02);
+}
+
+.sidebar button.active {
+    background-color: #1db954; /* Cor do Spotify */
+    color: white;
+}
+
+/* Main Content */
+.main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    height: calc(100vh - 150px); /* Ajuste para evitar sobreposição com navbar e footer */
+}
+
+h2 {
+    color: #1db954; /* Cor do Spotify */
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #282828;
+    background-color: #181818;
+    color: white;
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button.generate-btn {
+    background-color: #1db954; /* Cor do Spotify */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.generate-btn:hover {
+    background-color: #1ed760; /* Cor do Spotify (hover) */
+    transform: scale(1.02);
+}
+
+pre {
+    background-color: #181818;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: auto;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #ffffff;
+    max-height: 90px; /* Altura fixa para 4 linhas */
+    margin-top: 10px;
+    border: 1px solid #282828;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cronometro {
+    color: #1db954;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+/* Footer Transparente */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(18, 18, 18, 0.8); /* Cor semi-transparente */
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+    border-top: 1px solid #282828;
+    z-index: 1000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.footer a {
+    color: #1db954;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #1db954;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Barra de Progresso */
+.progress-bar-container {
+    width: 100%;
+    background-color: #181818;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 10px;
+    background-color: #1db954;
+    transition: width 0.3s ease;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #181818;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Cards Dinâmicos */
+.card {
+    background-color: #181818;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #1db954;
+}
+
+.card p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .navbar .logo {
+        font-size: 1.2rem;
+    }
+
+    .navbar h1 {
+        font-size: 1rem;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        margin-top: 150px; /* Ajuste para telas menores */
+        margin-bottom: 50px; /* Espaço para o footer */
+    }
+
+    .sidebar {
+        flex-direction: row;
+        justify-content: space-around;
+        border-right: none;
+        border-bottom: 1px solid #282828;
+        padding: 10px;
+    }
+
+    .sidebar button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
