@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     overflow-x: hidden;
@@ -20,12 +20,13 @@ body {
     width: 90%;
     max-width: 800px;
     display: grid;
-    grid-template-columns: 250px auto;
+    grid-template-columns: 250px 1fr;
     overflow: hidden;
     animation: fadeIn 1s ease-in-out;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin-top: 100px; /* Espaço para a navbar */
     margin-bottom: 50px; /* Espaço para o footer */
+    height: calc(100vh - 150px); /* Ajuste para evitar sobreposição com navbar e footer */
 }
 
 /* Navbar */
@@ -81,7 +82,7 @@ body {
 
 .sidebar button {
     background-color: #181818;
-    color: #ffffff;
+    color: white;
     border: none;
     padding: 10px;
     margin-bottom: 10px;
@@ -111,7 +112,7 @@ body {
     flex-direction: column;
     overflow-y: auto;
     transition: background-color 0.3s ease, color 0.3s ease;
-    height: calc(100vh - 150px); /* Ajuste para evitar sobreposição com navbar e footer */
+    height: 100%; /* Ajuste para ocupar todo o espaço disponível */
 }
 
 h2 {
@@ -171,6 +172,50 @@ pre {
     font-size: 0.9rem;
     margin-top: 10px;
     transition: color 0.3s ease;
+}
+
+/* Modo Claro */
+body.light-mode {
+    background-color: #f2f3f5;
+    color: #36393f;
+}
+
+body.light-mode .container {
+    background-color: #ffffff;
+    color: #36393f;
+}
+
+body.light-mode .sidebar {
+    background-color: #f9fafb;
+    color: #36393f;
+}
+
+body.light-mode .sidebar button {
+    background-color: #e5e7eb;
+    color: #36393f;
+}
+
+body.light-mode .sidebar button:hover {
+    background-color: #d1d5db;
+}
+
+body.light-mode .sidebar button.active {
+    background-color: #1db954;
+    color: white;
+}
+
+body.light-mode input {
+    background-color: #ffffff;
+    color: #36393f;
+}
+
+body.light-mode pre {
+    background-color: #f9fafb;
+    color: #36393f;
+}
+
+body.light-mode .cronometro {
+    color: #1db954;
 }
 
 /* Footer Transparente */
@@ -324,6 +369,10 @@ pre {
     .sidebar button {
         padding: 8px 15px;
         font-size: 0.9rem;
+    }
+
+    .main {
+        height: calc(100vh - 200px); /* Ajuste para evitar sobreposição com navbar e footer */
     }
 }
 
