@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Projects - Spotify Accounts 2025</title>
+    <!-- Metadados para Compartilhamento -->
+    <meta property="og:title" content="🎉 Code Projects - Spotify Accounts 2025 🎉">
+    <meta property="og:description" content="
+🚀 Bem-vindo ao Code Projects - Spotify Accounts 2025! 🚀
+
+Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante. Projetado para ser rápido e fácil de usar, este projeto fornece contas personalizadas e verifica sua validade em tempo real.
+
+✨ Principais Funcionalidades:
+- Geração rápida de contas de Spotify.
+- Verificação instantânea de contas.
+- Interface elegante e responsiva inspirada no Spotify.
+- Totalmente otimizado para desktops e dispositivos móveis.
+
+📚 Este projeto foi desenvolvido por Code Projects e modificado por Lucas Dev para fins educacionais. Explore suas funcionalidades e descubra como ele pode ser útil para seus projetos!
+
+🔗 Acesse agora: https://spotify-gen.pages.dev//
+">
+    <meta property="og:image" content="https://storage.googleapis.com/replit/images/1648036232748_65f1ad4f3be1100e9167eced2a56f480.png">
+    <meta property="og:url" content="https://spotify-gen.pages.dev/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🎉 Code Projects - Spotify Accounts 2025 🎉">
+    <meta name="twitter:description" content="Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante. Verifique sua validade e explore funcionalidades modernas em um design inspirado no Spotify.">
+    <meta name="twitter:image" content="https://storage.googleapis.com/replit/images/1648036232748_65f1ad4f3be1100e9167eced2a56f480.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluent/512/discord-nitro-badge.png">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Estilos Locais -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fab fa-spotify"></i>
+            <div>
+                <h1>Code Projects - Spotify Accounts 2025</h1>
+                <p>Obtenha contas de Spotify Premium gratuitas por 3 meses, uma conta por visitante!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container Principal -->
+    <div class="container animate__animated animate__fadeIn">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div>
+                <button onclick="mostrarGerador()" class="active"><i class="fas fa-plus"></i> Gerar Conta</button>
+                <button onclick="mostrarVerificador()"><i class="fas fa-check"></i> Verificar Conta</button>
+                <button onclick="mostrarCreditos()"><i class="fas fa-info-circle"></i> Créditos</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <select id="prefixoSelecionado">
+                    <option value="SP">Prefixo SP</option>
+                    <option value="SU">Prefixo SU</option>
+                    <option value="SV">Prefixo SV</option>
+                    <option value="SW">Prefixo SW</option>
+                    <option value="SX">Prefixo SX</option>
+                </select>
+                <button onclick="toggleTheme()" title="Alternar Modo Claro/Escuro">
+                    <i id="theme-icon" class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Gerador de Contas -->
+            <div id="gerador" class="secao active">
+                <h2><i class="fas fa-cogs"></i> Gerador de Contas</h2>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" min="1" max="1" value="1" readonly>
+                <button class="generate-btn" onclick="iniciarGeracaoContas()">
+                    <i class="fas fa-magic"></i> Gerar
+                </button>
+                <div class="loading-spinner" id="spinnerGerador"></div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBarGerador"></div>
+                </div>
+                <div class="cronometro" id="cronometroGerador"></div>
+                <pre id="contasGeradas"></pre>
+                <button class="generate-btn" onclick="exportarContas('contasGeradas')">
+                    <i class="fas fa-download"></i> Exportar Contas
+                </button>
+            </div>
+
+            <!-- Verificador de Contas -->
+            <div id="verificador" class="secao" style="display: none;">
+                <h2><i class="fas fa-search"></i> Verificador de Contas</h2>
+                <button class="generate-btn" onclick="iniciarVerificacaoContas()">
+                    <i class="fas fa-check-double"></i> Verificar
+                </button>
+                <div class="loading-spinner" id="spinnerVerificador"></div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBarVerificador"></div>
+                </div>
+                <div class="cronometro" id="cronometroVerificador"></div>
+                <pre id="resultadoVerificacao"></pre>
+            </div>
+
+            <!-- Créditos -->
+            <div id="creditos" class="secao" style="display: none;">
+                <h2><i class="fas fa-users"></i> Créditos</h2>
+                <p>Projeto criado por <strong>Code Projects</strong>.</p>
+                <p>Modificado por <strong>Lucas Dev</strong> para fins educacionais.</p>
+            </div>
+
+            <!-- Cards Dinâmicos -->
+            <div class="card tooltip" style="margin-top: 20px;">
+                <h3><i class="fas fa-info-circle"></i> Informações Importantes</h3>
+                <p>Use esta ferramenta apenas para fins educacionais.</p>
+                <span class="tooltiptext">Clique para saber mais!</span>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h3><i class="fas fa-lightbulb"></i> Dica Rápida</h3>
+                <p>Cada visitante pode obter apenas uma conta gratuita.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Transparente -->
+    <footer class="footer">
+        <p>Desenvolvido com ❤️ por <a href="https://github.com/seuusuario" target="_blank">Lucas Dev</a></p>
+    </footer>
+
+    <!-- Scripts Locais -->
+    <script src="script.js"></script>
+</body>
+</html>
