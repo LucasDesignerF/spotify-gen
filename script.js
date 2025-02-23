@@ -1,20 +1,5 @@
 let cronometroGeradorInterval;
 let cronometroVerificadorInterval;
-let contasDisponiveis = [];
-
-// Função para alternar entre modo escuro e claro
-function toggleTheme() {
-    const body = document.body;
-    const themeIcon = document.getElementById("theme-icon");
-    body.classList.toggle("light-mode");
-    if (body.classList.contains("light-mode")) {
-        themeIcon.classList.remove("fa-sun");
-        themeIcon.classList.add("fa-moon");
-    } else {
-        themeIcon.classList.remove("fa-moon");
-        themeIcon.classList.add("fa-sun");
-    }
-}
 
 // Função para iniciar o cronômetro
 function iniciarCronometro(elemento) {
@@ -32,21 +17,23 @@ function pararCronometro(intervalId, elemento) {
     elemento.textContent = "Concluído!";
 }
 
-// Função para carregar contas do JSON
-async function carregarContas() {
-    try {
-        const response = await fetch('contas.json');
-        if (!response.ok) {
-            throw new Error('Erro ao carregar contas');
-        }
-        contasDisponiveis = await response.json();
-    } catch (error) {
-        console.error(error);
-        alert('Erro ao carregar contas disponíveis.');
+// Função para gerar um código aleatório
+function gerarCodigoAleatorio() {
+    const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let codigo = "";
+    for (let i = 0; i < 16; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
     }
+    return codigo;
 }
 
-// Função para gerar uma conta
+// Função para gerar um link aleatório
+function gerarLink() {
+    const codigo = gerarCodigoAleatorio();
+    return `https://www.spotify.com/br-pt/ppt/microsoft/?code=${codigo}`;
+}
+
+// Função para iniciar a geração de contas
 function iniciarGeracaoContas() {
     const spinner = document.getElementById("spinnerGerador");
     const progressBar = document.getElementById("progressBarGerador");
@@ -60,33 +47,14 @@ function iniciarGeracaoContas() {
     // Iniciar cronômetro
     cronometroGeradorInterval = iniciarCronometro(cronometroElemento);
 
-    if (contasDisponiveis.length === 0) {
-        setTimeout(() => {
-            document.getElementById("contasGeradas").textContent = "Nenhuma conta disponível.";
-            spinner.style.display = "none";
-            pararCronometro(cronometroGeradorInterval, cronometroElemento);
-        }, 1000);
-        return;
-    }
-
-    const prefixo = document.getElementById("prefixoSelecionado").value;
-    const conta = gerarConta(prefixo);
+    const link = gerarLink();
 
     setTimeout(() => {
-        document.getElementById("contasGeradas").textContent = conta;
+        document.getElementById("contasGeradas").textContent = link;
         spinner.style.display = "none";
         pararCronometro(cronometroGeradorInterval, cronometroElemento);
         progressBar.style.width = "100%";
     }, 1000); // Simula um pequeno delay para visualização do spinner e progresso
-}
-
-// Função para gerar uma conta com prefixo
-function gerarConta(prefixo) {
-    if (contasDisponiveis.length === 0) {
-        return "Nenhuma conta disponível.";
-    }
-    const conta = contasDisponiveis.pop();
-    return `${prefixo}-${conta}`;
 }
 
 // Função para verificar contas (simulação)
@@ -139,7 +107,7 @@ async function iniciarVerificacaoContas() {
 // Função para exportar contas
 function exportarContas(idElemento) {
     const texto = document.getElementById(idElemento).textContent;
-    if (!texto || texto.includes("Nenhuma conta disponível.")) {
+    if (!texto || texto.includes("Nenhuma conta disponível.") || texto.includes("Gerar")) {
         alert("Nenhuma conta para exportar!");
         return;
     }
@@ -147,7 +115,7 @@ function exportarContas(idElemento) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "contas.txt";
+    a.download = "conta_spotify.txt";
     a.click();
     URL.revokeObjectURL(url);
 }
@@ -179,5 +147,6 @@ function toggleSecao(secaoId) {
 
 // Carregar contas disponíveis ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
-    carregarContas();
+    // Inicialmente, o gerador está ativo
+    mostrarGerador();
 });
